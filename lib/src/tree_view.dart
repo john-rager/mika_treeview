@@ -54,13 +54,14 @@ class _TreeViewState extends State<TreeView> {
 
   @override
   Widget build(BuildContext context) {
+    var nodes = _copyNodes(widget.nodes)!;
     return (widget.nodes.isEmpty)
         ? widget.emptyTreeNotice
         : Column(
             children: [
               if (widget.isSearchable)
                 TreeSearchForm(
-                  nodes: widget.nodes,
+                  nodes: nodes,
                   onResults: (results) {
                     setState(() {
                       treeController.expandAll();
@@ -72,12 +73,26 @@ class _TreeViewState extends State<TreeView> {
                 treeController: treeController,
                 indent: widget.indent,
                 nodes: _buildTree(
-                    nodes: widget.nodes,
+                    nodes: nodes,
                     isSorted: widget.isSorted,
                     searchResults: searchResults),
               ),
             ],
           );
+  }
+
+  List<Map<String, dynamic>>? _copyNodes(List<Map<String, dynamic>>? nodes) {
+    if (nodes == null) {
+      return null;
+    }
+    return nodes.map((e) {
+      var node = {
+        'id': e['id'],
+        'name': e['name'],
+        if (e['children'] != null) 'children': _copyNodes(e['children']),
+      };
+      return node;
+    }).toList();
   }
 
   List<fst.TreeNode> _buildTree({
