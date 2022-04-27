@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:mika_treeview/mika_treeview.dart';
 
 class TreeSearchForm extends StatefulWidget {
   const TreeSearchForm({
     Key? key,
-    required this.nodes,
+    required this.tree,
     required this.onResults,
   }) : super(key: key);
 
-  final List<Map<String, dynamic>> nodes;
+  final Tree tree;
   final ValueChanged<Set<String>> onResults;
 
   @override
@@ -43,7 +44,7 @@ class _TreeSearchFormState extends State<TreeSearchForm> {
                       searchTextController.clear();
                       widget.onResults(
                         _searchTree(
-                          nodes: widget.nodes,
+                          tree: widget.tree,
                           text: searchTextController.text,
                         ),
                       );
@@ -64,7 +65,7 @@ class _TreeSearchFormState extends State<TreeSearchForm> {
               onPressed: () {
                 widget.onResults(
                   _searchTree(
-                    nodes: widget.nodes,
+                    tree: widget.tree,
                     text: searchTextController.text,
                   ),
                 );
@@ -79,24 +80,23 @@ class _TreeSearchFormState extends State<TreeSearchForm> {
   }
 }
 
-Set<String> _searchTree(
-    {required List<Map<String, dynamic>> nodes, required String text}) {
+Set<String> _searchTree({required Tree tree, required String text}) {
   Set<String> results = {};
 
   Set<String> traverse({
-    required List<Map<String, dynamic>> nodes,
+    required Tree tree,
     required String text,
   }) {
-    for (Map<String, dynamic> node in nodes) {
+    for (Node node in tree) {
       if (node['name'].contains(RegExp(text, caseSensitive: false))) {
         results.add(node['id']);
       }
       if (node['children'] != null) {
-        traverse(nodes: node['children'], text: text);
+        traverse(tree: node['children'], text: text);
       }
     }
     return results;
   }
 
-  return (text != '') ? traverse(nodes: nodes, text: text) : {};
+  return (text != '') ? traverse(tree: tree, text: text) : {};
 }

@@ -5,7 +5,7 @@ import 'package:mika_treeview/mika_treeview.dart';
 class TreeView extends StatefulWidget {
   const TreeView({
     Key? key,
-    required this.nodes,
+    required this.tree,
     this.selectMode = SelectMode.none,
     this.values,
     this.onChanged,
@@ -17,7 +17,7 @@ class TreeView extends StatefulWidget {
     this.indent = 40.0,
   }) : super(key: key);
 
-  final List<Map<String, dynamic>> nodes;
+  final Tree tree;
   final SelectMode selectMode;
   final Set<String>? values;
   final ValueChanged<Set<String>>? onChanged;
@@ -54,14 +54,14 @@ class _TreeViewState extends State<TreeView> {
 
   @override
   Widget build(BuildContext context) {
-    var nodes = _copyNodes(widget.nodes)!;
-    return (widget.nodes.isEmpty)
+    var tree = _copyTree(widget.tree)!;
+    return (widget.tree.isEmpty)
         ? widget.emptyTreeNotice
         : Column(
             children: [
               if (widget.isSearchable)
                 TreeSearchForm(
-                  nodes: nodes,
+                  tree: tree,
                   onResults: (results) {
                     setState(() {
                       treeController.expandAll();
@@ -73,7 +73,7 @@ class _TreeViewState extends State<TreeView> {
                 treeController: treeController,
                 indent: widget.indent,
                 nodes: _buildTree(
-                    nodes: nodes,
+                    tree: tree,
                     isSorted: widget.isSorted,
                     searchResults: searchResults),
               ),
@@ -81,30 +81,30 @@ class _TreeViewState extends State<TreeView> {
           );
   }
 
-  List<Map<String, dynamic>>? _copyNodes(List<Map<String, dynamic>>? nodes) {
-    if (nodes == null) {
+  Tree? _copyTree(Tree? tree) {
+    if (tree == null) {
       return null;
     }
-    return nodes.map((e) {
+    return tree.map((e) {
       var node = {
         'id': e['id'],
         'name': e['name'],
-        if (e['children'] != null) 'children': _copyNodes(e['children']),
+        if (e['children'] != null) 'children': _copyTree(e['children']),
       };
       return node;
     }).toList();
   }
 
   List<fst.TreeNode> _buildTree({
-    required List<Map<String, dynamic>> nodes,
+    required Tree tree,
     bool isSorted = false,
     required Set<String> searchResults,
   }) {
     if (isSorted) {
-      nodes.sort((a, b) => (a['name']).compareTo(b['name']));
+      tree.sort((a, b) => (a['name']).compareTo(b['name']));
     }
     return [
-      for (final node in nodes)
+      for (final node in tree)
         fst.TreeNode(
           content: NodeWidget(
             node: node,
@@ -130,7 +130,7 @@ class _TreeViewState extends State<TreeView> {
           ),
           children: (node['children'] != null)
               ? _buildTree(
-                  nodes: node['children'],
+                  tree: node['children'],
                   isSorted: isSorted,
                   searchResults: searchResults)
               : null,
