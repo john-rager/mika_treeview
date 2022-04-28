@@ -5,6 +5,7 @@ import '../widgets/toggle_text.dart';
 
 typedef NodeActionBuilder<N> = Widget Function(N node);
 
+/// A widget that represents the visual appearance of a node in the tree.
 class NodeWidget extends StatefulWidget {
   const NodeWidget({
     Key? key,

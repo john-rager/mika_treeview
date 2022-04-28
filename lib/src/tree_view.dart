@@ -4,15 +4,15 @@ import 'package:mika_treeview/mika_treeview.dart';
 
 /// A tree view widget that extends
 /// https://pub.dev/packages/flutter_simple_treeview to provide several
-/// additional features.
+/// useful features.
 ///
-/// 1. Can accept an alternative widget to render if the tree is empty.
-/// 1. Single or multiple nodes can be toggled as selected.
-/// 1. The tree can be sorted alphabetically.
-/// 1. The tree can be searched.
-/// 1. A trailing widget can be attached to the nodes to provide for use
-///    cases like a providing a pop-up menu or a button to take action on a
-///    particular node.
+/// * Can accept an alternative widget to render if the tree is empty.
+/// * Single or multiple nodes can be toggled as selected.
+/// * The tree can be sorted alphabetically.
+/// * The tree can be searched.
+/// * A trailing widget can be attached to the nodes to provide for use
+///   cases such as providing a pop-up menu or a button to take action on a
+///   particular node.
 class TreeView extends StatefulWidget {
   const TreeView({
     Key? key,
@@ -29,6 +29,10 @@ class TreeView extends StatefulWidget {
   }) : super(key: key);
 
   /// The tree to build the tree view from.
+  ///
+  /// [tree] must be provided as a [List]<[Map]<[String], [dynamic]>>.  See
+  /// the package documentation on [pub.dev](https://pub.dev/) for more
+  /// information on how to construct [tree].
   final Tree tree;
 
   /// Specifies the selection behavior for the tree.  See [SelectMode].
