@@ -19,13 +19,23 @@ class NodeWidget extends StatefulWidget {
   /// The node to generate a node widget from.
   final Node node;
 
-  /// Indicates whether the node should be selectable.
+  /// Indicates whether the node is selectable.  See [ToggleText].
   final bool isSelectable;
 
   /// Indicates whether the node has been selected.
   final bool? isSelected;
+
+  /// Optional function to build a trailing widget such as a pop-up menu or
+  /// button, specific for the node.
   final NodeActionBuilder<dynamic>? nodeActionBuilder;
+
+  /// If [TreeView.isSearchable] is true, this will contain the set of node
+  /// id's from a search.  This is used to determine whether the node text
+  /// should be highlighted as found.
   final Set<String> searchResults;
+
+  /// If [isSelectable] is true, this function will be called to indicate
+  /// that the node has been tapped.
   final ValueChanged<bool>? onChanged;
 
   @override

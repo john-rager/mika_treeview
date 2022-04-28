@@ -2,6 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_simple_treeview/flutter_simple_treeview.dart' as fst;
 import 'package:mika_treeview/mika_treeview.dart';
 
+/// A tree view widget that extends
+/// https://pub.dev/packages/flutter_simple_treeview to provide several
+/// additional features.
+///
+/// 1. Can accept an alternative widget to render if the tree is empty.
+/// 1. Single or multiple nodes can be toggled as selected.
+/// 1. The tree can be sorted alphabetically.
+/// 1. The tree can be searched.
+/// 1. A trailing widget can be attached to the nodes to provide for use
+///    cases like a providing a pop-up menu or a button to take action on a
+///    particular node.
 class TreeView extends StatefulWidget {
   const TreeView({
     Key? key,
@@ -17,15 +28,38 @@ class TreeView extends StatefulWidget {
     this.indent = 40.0,
   }) : super(key: key);
 
+  /// The tree to build the tree view from.
   final Tree tree;
+
+  /// Specifies the selection behavior for the tree.  See [SelectMode].
   final SelectMode selectMode;
+
+  /// If [selectMode] is [SelectMode.single] or [SelectMode.multiple], this
+  /// set of node id's can be used to specify the initially selected node(s).
   final Set<String>? values;
+
+  /// If [isSelectable] is true, this function will be called to indicate
+  /// that the node has been tapped.
   final ValueChanged<Set<String>>? onChanged;
+
+  /// Specifies the widget to render if the tree is currently empty.
   final Widget emptyTreeNotice;
+
+  /// Optional function to build a trailing widget such as a pop-up menu or
+  /// button, specific for the node.
   final NodeActionBuilder<dynamic>? nodeActionBuilder;
+
+  /// Specifies whether the tree is searchable.  If true, then a
+  /// [TreeSearchForm] is rendered above the tree.
   final bool isSearchable;
+
+  /// Specifies whether the tree should be sorted alphabetically.
   final bool isSorted;
+
+  /// See https://pub.dev/packages/flutter_simple_treeview.
   final bool allNodesExpanded;
+
+  /// See https://pub.dev/packages/flutter_simple_treeview.
   final double indent;
 
   @override

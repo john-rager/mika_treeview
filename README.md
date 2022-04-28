@@ -11,10 +11,14 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages). 
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+A treeview based on [flutter_simple_treeview](https://pub.dev/packages/flutter_simple_treeview), adding several useful features.
 
 ## Features
+
+<p>
+    <img src="https://github.com/flutter/plugins/blob/master/packages/in_app_purchase/in_app_purchase/doc/iap_ios.gif?raw=true"
+    alt="An animated image of the iOS MIKA Tree View UI" height="400"/>
+</p>
 
 TODO: List what your package can do. Maybe include images, gifs, or videos.
 

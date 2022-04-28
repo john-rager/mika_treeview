@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mika_treeview/mika_treeview.dart';
 
+/// A form widget that provides for a recursive case-insensitive search
+/// through the tree for any occurrence of the provided text string.
+///
+/// Once the search is complete, [onResults] is called with a set of the
+/// node id's matching the search string.
 class TreeSearchForm extends StatefulWidget {
   const TreeSearchForm({
     Key? key,
@@ -8,7 +13,10 @@ class TreeSearchForm extends StatefulWidget {
     required this.onResults,
   }) : super(key: key);
 
+  /// The tree to search.
   final Tree tree;
+
+  /// The function to call when the search is complete.
   final ValueChanged<Set<String>> onResults;
 
   @override
