@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mika_treeview/mika_treeview.dart';
 
 import '../widgets/toggle_text.dart';
 
@@ -15,8 +16,13 @@ class NodeWidget extends StatefulWidget {
     this.onChanged,
   }) : super(key: key);
 
-  final dynamic node;
+  /// The node to generate a node widget from.
+  final Node node;
+
+  /// Indicates whether the node should be selectable.
   final bool isSelectable;
+
+  /// Indicates whether the node has been selected.
   final bool? isSelected;
   final NodeActionBuilder<dynamic>? nodeActionBuilder;
   final Set<String> searchResults;

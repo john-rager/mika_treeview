@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+/// A text widget that can be toggled "on" or "off" to indicate selection.
+///
+/// Provide your text, an initial toggle value (optional), and an [onChanged]
+/// handler, to render a text widget that responds to a tap to indicate
+/// whether it has been selected. This widget honors the theme of the context.
 class ToggleText extends StatelessWidget {
   const ToggleText({
     Key? key,
@@ -9,9 +14,17 @@ class ToggleText extends StatelessWidget {
     this.style,
   }) : super(key: key);
 
+  /// The text to display in the widget.
   final String text;
+
+  /// Initial toggle value (optional, defaults to false).
   final bool value;
+
+  /// If non-null, the style to use for this text.
   final TextStyle? style;
+
+  /// A handler function that is passed the toggle value when the widget
+  /// is tapped.
   final ValueChanged<bool> onChanged;
 
   @override

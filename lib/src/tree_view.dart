@@ -139,8 +139,14 @@ class _TreeViewState extends State<TreeView> {
   }
 }
 
+/// Supported node selection behaviors.
 enum SelectMode {
+  /// Indicates that the tree doesn't allow node selection.
   none,
+
+  /// Indicates that the tree allows single selection.
   single,
+
+  /// Indicates that the tree allows multiple selection.
   multiple,
 }
