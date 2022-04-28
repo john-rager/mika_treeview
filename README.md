@@ -16,7 +16,7 @@ A treeview based on [flutter_simple_treeview](https://pub.dev/packages/flutter_s
 ## Features
 
 <p>
-    <img src="https://github.com/flutter/plugins/blob/master/packages/in_app_purchase/in_app_purchase/doc/iap_ios.gif?raw=true"
+    <img src="https://github.com/john-rager/mika_treeview/blob/main/doc/mika_treeview_ios.gif?raw=true"
     alt="An animated image of the iOS MIKA Tree View UI" height="400"/>
 </p>
 
