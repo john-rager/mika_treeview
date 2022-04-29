@@ -3,7 +3,7 @@ import 'package:mika_treeview/mika_treeview.dart';
 
 import '../widgets/toggle_text.dart';
 
-typedef NodeActionBuilder<N> = Widget Function(N node);
+typedef TrailingBuilder<N> = Widget Function(N node);
 
 /// A widget that represents the visual appearance of a node in the tree.
 class NodeWidget extends StatefulWidget {
@@ -12,7 +12,7 @@ class NodeWidget extends StatefulWidget {
     required this.node,
     this.isSelectable = false,
     this.isSelected,
-    this.nodeActionBuilder,
+    this.trailingBuilder,
     this.searchResults = const {},
     this.onChanged,
   }) : super(key: key);
@@ -28,7 +28,7 @@ class NodeWidget extends StatefulWidget {
 
   /// Optional function to build a trailing widget such as a pop-up menu or
   /// button, specific for the node.
-  final NodeActionBuilder<dynamic>? nodeActionBuilder;
+  final TrailingBuilder<dynamic>? trailingBuilder;
 
   /// If [TreeView.isSearchable] is true, this will contain the set of node
   /// id's from a search.  This is used to determine whether the node text
@@ -69,8 +69,8 @@ class _NodeWidgetState extends State<NodeWidget> {
                       : const TextStyle(),
                 ),
           const Spacer(),
-          if (widget.nodeActionBuilder != null)
-            widget.nodeActionBuilder!(widget.node),
+          if (widget.trailingBuilder != null)
+            widget.trailingBuilder!(widget.node),
         ],
       ),
     );

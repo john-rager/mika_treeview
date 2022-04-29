@@ -80,14 +80,14 @@ Example tree view (all options enabled):
 ```dart
 TreeView(
   tree: tree,
+  treeController: _controller,
   selectMode: SelectMode.multiple,
   values: const {'1', '3'},
   onChanged: _onChangedHandler,
   emptyTreeNotice: const EmptyTreeWidget(),
-  nodeActionBuilder: _nodeActionBuilder,
+  trailingBuilder: _trailingBuilder,
   isSearchable: true,
   isSorted: true,
-  allNodesExpanded: true,
   indent: 20.0,
 ),
 ```

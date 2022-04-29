@@ -22,7 +22,7 @@ class TreeView extends StatefulWidget {
     this.values,
     this.onChanged,
     this.emptyTreeNotice = const SizedBox(),
-    this.nodeActionBuilder,
+    this.trailingBuilder,
     this.isSearchable = false,
     this.isSorted = false,
     this.indent = 40.0,
@@ -54,7 +54,7 @@ class TreeView extends StatefulWidget {
 
   /// Optional function to build a trailing widget such as a pop-up menu or
   /// button, specific for the node.
-  final NodeActionBuilder<dynamic>? nodeActionBuilder;
+  final TrailingBuilder<dynamic>? trailingBuilder;
 
   /// Specifies whether the tree is searchable.  If true, then a
   /// [TreeSearchForm] is rendered above the tree.
@@ -147,7 +147,7 @@ class _TreeViewState extends State<TreeView> {
             node: node,
             isSelectable: widget.selectMode != SelectMode.none,
             isSelected: values.contains(node['id']),
-            nodeActionBuilder: widget.nodeActionBuilder,
+            trailingBuilder: widget.trailingBuilder,
             searchResults: searchResults,
             onChanged: (isSelected) {
               setState(() {
