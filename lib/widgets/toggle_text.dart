@@ -31,9 +31,7 @@ class ToggleText extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     return GestureDetector(
-      onTap: () {
-        onChanged(!value);
-      },
+      onTap: () => onChanged(!value),
       child: (value)
           ? Container(
               decoration: BoxDecoration(

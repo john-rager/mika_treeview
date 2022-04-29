@@ -45,6 +45,14 @@ class NodeWidget extends StatefulWidget {
 
 class _NodeWidgetState extends State<NodeWidget> {
   @override
+  void initState() {
+    super.initState();
+    if (widget.onChanged == null && widget.isSelectable) {
+      throw ArgumentError('onChanged is required when isSelectable is true');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Flexible(
       child: Row(
@@ -56,11 +64,7 @@ class _NodeWidgetState extends State<NodeWidget> {
                   style: (widget.searchResults.contains(widget.node['id']))
                       ? const TextStyle(fontWeight: FontWeight.w800)
                       : const TextStyle(),
-                  onChanged: (v) {
-                    if (widget.onChanged != null) {
-                      widget.onChanged!(v);
-                    }
-                  },
+                  onChanged: widget.onChanged!,
                 )
               : Text(
                   widget.node['name'],

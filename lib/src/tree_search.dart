@@ -35,6 +35,26 @@ class _TreeSearchFormState extends State<TreeSearchForm> {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+
+    void _onClearPressed() {
+      searchTextController.clear();
+      widget.onResults(
+        _searchTree(
+          tree: widget.tree,
+          text: searchTextController.text,
+        ),
+      );
+    }
+
+    void _onSearchPressed() {
+      widget.onResults(
+        _searchTree(
+          tree: widget.tree,
+          text: searchTextController.text,
+        ),
+      );
+    }
+
     return Column(
       children: [
         Flex(
@@ -48,15 +68,7 @@ class _TreeSearchFormState extends State<TreeSearchForm> {
                   hintText: 'Search',
                   suffixIcon: IconButton(
                     icon: const Icon(Icons.clear),
-                    onPressed: () {
-                      searchTextController.clear();
-                      widget.onResults(
-                        _searchTree(
-                          tree: widget.tree,
-                          text: searchTextController.text,
-                        ),
-                      );
-                    },
+                    onPressed: _onClearPressed,
                   ),
                 ),
                 autofocus: true,
@@ -70,14 +82,7 @@ class _TreeSearchFormState extends State<TreeSearchForm> {
                 primary: theme.colorScheme.onPrimary,
                 textStyle: const TextStyle(fontSize: 16),
               ),
-              onPressed: () {
-                widget.onResults(
-                  _searchTree(
-                    tree: widget.tree,
-                    text: searchTextController.text,
-                  ),
-                );
-              },
+              onPressed: _onSearchPressed,
               child: const Text('Search'),
             ),
           ],

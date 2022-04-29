@@ -92,6 +92,14 @@ class _TreeViewState extends State<TreeView> {
   @override
   Widget build(BuildContext context) {
     var tree = _copyTree(widget.tree)!;
+
+    void _onResults(results) {
+      setState(() {
+        treeController!.expandAll();
+        searchResults = results;
+      });
+    }
+
     return (widget.tree.isEmpty)
         ? widget.emptyTreeNotice
         : Column(
@@ -99,12 +107,7 @@ class _TreeViewState extends State<TreeView> {
               if (widget.isSearchable)
                 TreeSearchForm(
                   tree: tree,
-                  onResults: (results) {
-                    setState(() {
-                      treeController!.expandAll();
-                      searchResults = results;
-                    });
-                  },
+                  onResults: _onResults,
                 ),
               fst.TreeView(
                 treeController: treeController,
