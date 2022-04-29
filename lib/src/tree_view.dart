@@ -17,6 +17,7 @@ class TreeView extends StatefulWidget {
   const TreeView({
     Key? key,
     required this.tree,
+    this.treeController,
     this.selectMode = SelectMode.none,
     this.values,
     this.onChanged,
@@ -24,7 +25,6 @@ class TreeView extends StatefulWidget {
     this.nodeActionBuilder,
     this.isSearchable = false,
     this.isSorted = false,
-    this.allNodesExpanded = false,
     this.indent = 40.0,
   }) : super(key: key);
 
@@ -34,6 +34,9 @@ class TreeView extends StatefulWidget {
   /// the package documentation on [pub.dev](https://pub.dev/) for more
   /// information on how to construct [tree].
   final Tree tree;
+
+  /// See https://pub.dev/packages/flutter_simple_treeview.
+  final TreeController? treeController;
 
   /// Specifies the selection behavior for the tree.  See [SelectMode].
   final SelectMode selectMode;
@@ -61,9 +64,6 @@ class TreeView extends StatefulWidget {
   final bool isSorted;
 
   /// See https://pub.dev/packages/flutter_simple_treeview.
-  final bool allNodesExpanded;
-
-  /// See https://pub.dev/packages/flutter_simple_treeview.
   final double indent;
 
   @override
@@ -71,7 +71,7 @@ class TreeView extends StatefulWidget {
 }
 
 class _TreeViewState extends State<TreeView> {
-  late fst.TreeController treeController;
+  TreeController? treeController;
   Set<String> values = {};
   Set<String> searchResults = {};
   final searchTextController = TextEditingController();
@@ -83,8 +83,7 @@ class _TreeViewState extends State<TreeView> {
       throw ArgumentError('onChanged is required when selectMode '
           'is other than ${SelectMode.none}');
     }
-    treeController =
-        fst.TreeController(allNodesExpanded: widget.allNodesExpanded);
+    treeController = widget.treeController ?? TreeController();
     if (widget.values != null) {
       values = {...widget.values!};
     }
@@ -102,7 +101,7 @@ class _TreeViewState extends State<TreeView> {
                   tree: tree,
                   onResults: (results) {
                     setState(() {
-                      treeController.expandAll();
+                      treeController!.expandAll();
                       searchResults = results;
                     });
                   },
