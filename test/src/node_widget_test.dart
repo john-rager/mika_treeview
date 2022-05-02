@@ -90,7 +90,6 @@ class TestNodeWidget extends StatefulWidget {
 }
 
 class _TestToggleTextState extends State<TestNodeWidget> {
-  bool value = false;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
