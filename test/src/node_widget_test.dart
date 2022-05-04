@@ -11,7 +11,6 @@ void main() {
       await tester.pumpWidget(TestNodeWidget(
         nodeWidget: NodeWidget(
           node: node,
-          isSelectable: true,
           onChanged: (v) {},
         ),
       ));
@@ -24,7 +23,6 @@ void main() {
       await tester.pumpWidget(TestNodeWidget(
         nodeWidget: NodeWidget(
           node: node,
-          isSelectable: false,
         ),
       ));
 
@@ -36,7 +34,6 @@ void main() {
       await tester.pumpWidget(TestNodeWidget(
         nodeWidget: NodeWidget(
           node: node,
-          isSelectable: false,
           trailingBuilder: (node) {
             return const Text(
               'Trailing',
@@ -56,7 +53,6 @@ void main() {
       await tester.pumpWidget(TestNodeWidget(
         nodeWidget: NodeWidget(
           node: node,
-          isSelectable: false,
           searchResults: const {'1', '2', '3'},
         ),
       ));
@@ -71,7 +67,6 @@ void main() {
       await tester.pumpWidget(TestNodeWidget(
         nodeWidget: NodeWidget(
           node: node,
-          isSelectable: false,
           searchResults: const {'2', '3'},
         ),
       ));

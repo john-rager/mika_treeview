@@ -112,27 +112,29 @@ class _TreeViewState extends State<TreeView> {
       });
     }
 
-    return (widget.tree.isEmpty)
-        ? widget.emptyTreeNotice
-        : Column(
-            children: [
-              Visibility(
-                visible: widget.isSearchable,
-                child: TreeSearchForm(
-                  tree: tree,
-                  onResults: _onResults,
-                ),
-              ),
-              fst.TreeView(
-                treeController: treeController,
-                indent: widget.indent,
-                nodes: _buildTree(
-                    tree: tree,
-                    isSorted: widget.isSorted,
-                    searchResults: searchResults),
-              ),
-            ],
-          );
+    if ((widget.tree.isEmpty)) {
+      return widget.emptyTreeNotice;
+    } else {
+      return Column(
+        children: [
+          Visibility(
+            visible: widget.isSearchable,
+            child: TreeSearchForm(
+              tree: tree,
+              onResults: _onResults,
+            ),
+          ),
+          fst.TreeView(
+            treeController: treeController,
+            indent: widget.indent,
+            nodes: _buildTree(
+                tree: tree,
+                isSorted: widget.isSorted,
+                searchResults: searchResults),
+          ),
+        ],
+      );
+    }
   }
 
   Tree? _copyTree(Tree? tree) {
@@ -162,25 +164,26 @@ class _TreeViewState extends State<TreeView> {
         fst.TreeNode(
           content: NodeWidget(
             node: node,
-            isSelectable: widget.selectMode != SelectMode.none,
             isSelected: values.contains(node['id']),
             trailingBuilder: widget.trailingBuilder,
             searchResults: searchResults,
-            onChanged: (isSelected) {
-              setState(() {
-                if (isSelected) {
-                  if (widget.selectMode == SelectMode.single) {
-                    values.clear();
-                  }
-                  values.add(node['id']);
-                } else {
-                  values.remove(node['id']);
-                }
-              });
-              if (widget.onChanged != null) {
-                widget.onChanged!(values);
-              }
-            },
+            onChanged: (widget.selectMode == SelectMode.none)
+                ? null
+                : (isSelected) {
+                    setState(() {
+                      if (isSelected) {
+                        if (widget.selectMode == SelectMode.single) {
+                          values.clear();
+                        }
+                        values.add(node['id']);
+                      } else {
+                        values.remove(node['id']);
+                      }
+                    });
+                    if (widget.onChanged != null) {
+                      widget.onChanged!(values);
+                    }
+                  },
           ),
           children: (node['children'] != null)
               ? _buildTree(

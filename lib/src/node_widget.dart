@@ -10,7 +10,6 @@ class NodeWidget extends StatelessWidget {
   const NodeWidget(
       {Key? key,
       required this.node,
-      this.isSelectable = false,
       this.isSelected,
       this.trailingBuilder,
       this.searchResults = const {},
@@ -19,9 +18,6 @@ class NodeWidget extends StatelessWidget {
 
   /// The node to generate a node widget from.
   final Node node;
-
-  /// Indicates whether the node is selectable.  See [ToggleText].
-  final bool isSelectable;
 
   /// Indicates whether the node has been selected.
   final bool? isSelected;
@@ -35,34 +31,31 @@ class NodeWidget extends StatelessWidget {
   /// should be highlighted as found.
   final Set<String> searchResults;
 
-  /// If [isSelectable] is true, this function will be called to indicate
+  /// Makes the node is selectable.  This function will be called to indicate
   /// that the node has been tapped.
   final ValueChanged<bool>? onChanged;
 
   @override
   Widget build(BuildContext context) {
-    if (onChanged == null && isSelectable) {
-      throw ArgumentError('onChanged is required when isSelectable is true');
-    }
-
     return Flexible(
       child: Row(
         children: [
-          (isSelectable)
-              ? ToggleText(
-                  text: node['name'],
-                  value: isSelected ?? false,
-                  style: (searchResults.contains(node['id']))
-                      ? const TextStyle(fontWeight: FontWeight.w800)
-                      : const TextStyle(),
-                  onChanged: onChanged!,
-                )
-              : Text(
-                  node['name'],
-                  style: (searchResults.contains(node['id']))
-                      ? const TextStyle(fontWeight: FontWeight.w800)
-                      : const TextStyle(),
-                ),
+          if (onChanged != null)
+            ToggleText(
+              text: node['name'],
+              value: isSelected ?? false,
+              style: (searchResults.contains(node['id']))
+                  ? const TextStyle(fontWeight: FontWeight.w800)
+                  : const TextStyle(),
+              onChanged: onChanged!,
+            )
+          else
+            Text(
+              node['name'],
+              style: (searchResults.contains(node['id']))
+                  ? const TextStyle(fontWeight: FontWeight.w800)
+                  : const TextStyle(),
+            ),
           const Spacer(),
           if (trailingBuilder != null) trailingBuilder!(node),
         ],
