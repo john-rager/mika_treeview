@@ -104,11 +104,13 @@ class _TreeViewState extends State<TreeView> {
         ? widget.emptyTreeNotice
         : Column(
             children: [
-              if (widget.isSearchable)
-                TreeSearchForm(
+              Visibility(
+                visible: widget.isSearchable,
+                child: TreeSearchForm(
                   tree: tree,
                   onResults: _onResults,
                 ),
+              ),
               fst.TreeView(
                 treeController: treeController,
                 indent: widget.indent,
