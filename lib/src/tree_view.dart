@@ -89,6 +89,12 @@ class _TreeViewState extends State<TreeView> {
       throw ArgumentError(
           'values cannot be provided if selectMode is ${SelectMode.none}');
     }
+    if (widget.values != null &&
+        widget.values!.length > 1 &&
+        widget.selectMode == SelectMode.single) {
+      throw ArgumentError('only one value can be provided if selectMode is '
+          '${SelectMode.single}');
+    }
     treeController = widget.treeController ?? TreeController();
     if (widget.values != null) {
       values = {...widget.values!};
