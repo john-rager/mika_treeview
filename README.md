@@ -2,7 +2,7 @@ A treeview based on [flutter_simple_treeview](https://pub.dev/packages/flutter_s
 
 <p>
     <img src="https://github.com/john-rager/mika_treeview/blob/main/doc/mika_treeview_ios.gif?raw=true"
-    alt="An animated image of the iOS MIKA Tree View UI" height="400"/>
+    alt="An animated image of the iOS MIKA Tree View UI" height="600"/>
 </p>
 
 ## Features
@@ -94,4 +94,4 @@ TreeView(
 ## Additional information
 
 This is my very first package on pub.dev, so I'd love to hear your feedback. If you find it useful, please like it - it'll help
-keep me motivated. If you have any suggestions or problems, submit an issue to my [GitHub repo](https://github.com/john-rager/mika_treeview) and I'll do my very best to address it promptly.
+keep me motivated. If you have any suggestions or problems, please start a discussion or submit an issue to my [GitHub repo](https://github.com/john-rager/mika_treeview) and I'll do my very best to address it promptly.
