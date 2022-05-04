@@ -5,68 +5,69 @@ import 'package:mika_treeview/src/tree_search.dart';
 import '../data.dart';
 
 void main() {
-  testWidgets('TreeSearchForm returns id\'s of found nodes',
-      (WidgetTester tester) async {
-    Set<String> searchResults = {};
-    await tester.pumpWidget(TestTreeSearchForm(
-      onResults: (results) {
-        searchResults = results;
-      },
-    ));
+  group('TreeSearchForm', () {
+    testWidgets('returns id\'s of found nodes', (WidgetTester tester) async {
+      Set<String> searchResults = {};
+      await tester.pumpWidget(TestTreeSearchForm(
+        onResults: (results) {
+          searchResults = results;
+        },
+      ));
 
-    await tester.enterText(find.byType(TextField), 'pay');
-    await tester.tap(find.byType(OutlinedButton));
-    await tester.pump();
-    expect(searchResults, {'5', '3'});
-  });
+      await tester.enterText(find.byType(TextField), 'pay');
+      await tester.tap(find.byType(OutlinedButton));
+      await tester.pump();
+      expect(searchResults, {'5', '3'});
+    });
 
-  testWidgets('TreeSearchForm returns empty set if nothing found',
-      (WidgetTester tester) async {
-    Set<String> searchResults = {};
-    await tester.pumpWidget(TestTreeSearchForm(
-      onResults: (results) {
-        searchResults = results;
-      },
-    ));
+    testWidgets('returns empty set if nothing is found',
+        (WidgetTester tester) async {
+      Set<String> searchResults = {};
+      await tester.pumpWidget(TestTreeSearchForm(
+        onResults: (results) {
+          searchResults = results;
+        },
+      ));
 
-    await tester.enterText(find.byType(TextField), 'xyz');
-    await tester.tap(find.byType(OutlinedButton));
-    await tester.pump();
-    expect(searchResults, <String>{});
-  });
+      await tester.enterText(find.byType(TextField), 'xyz');
+      await tester.tap(find.byType(OutlinedButton));
+      await tester.pump();
+      expect(searchResults, <String>{});
+    });
 
-  testWidgets('TreeSearchForm returns empty set if nothing to search',
-      (WidgetTester tester) async {
-    Set<String> searchResults = {};
-    await tester.pumpWidget(TestTreeSearchForm(
-      onResults: (results) {
-        searchResults = results;
-      },
-    ));
+    testWidgets('returns empty set if no search string was provided',
+        (WidgetTester tester) async {
+      Set<String> searchResults = {};
+      await tester.pumpWidget(TestTreeSearchForm(
+        onResults: (results) {
+          searchResults = results;
+        },
+      ));
 
-    await tester.enterText(find.byType(TextField), '');
-    await tester.tap(find.byType(OutlinedButton));
-    await tester.pump();
-    expect(searchResults, <String>{});
-  });
+      await tester.enterText(find.byType(TextField), '');
+      await tester.tap(find.byType(OutlinedButton));
+      await tester.pump();
+      expect(searchResults, <String>{});
+    });
 
-  testWidgets('TreeSearchForm returns empty set if clear icon is tapped',
-      (WidgetTester tester) async {
-    Set<String> searchResults = {};
-    await tester.pumpWidget(TestTreeSearchForm(
-      onResults: (results) {
-        searchResults = results;
-      },
-    ));
+    testWidgets('returns empty set if the clear icon is tapped',
+        (WidgetTester tester) async {
+      Set<String> searchResults = {};
+      await tester.pumpWidget(TestTreeSearchForm(
+        onResults: (results) {
+          searchResults = results;
+        },
+      ));
 
-    // Do a search that should return results.
-    await tester.enterText(find.byType(TextField), 'pay');
-    await tester.tap(find.byType(OutlinedButton));
-    await tester.pump();
-    // Now clear it.
-    await tester.tap(find.byType(IconButton));
-    await tester.pump();
-    expect(searchResults, <String>{});
+      // Do a search that should return results.
+      await tester.enterText(find.byType(TextField), 'pay');
+      await tester.tap(find.byType(OutlinedButton));
+      await tester.pump();
+      // Now clear it.
+      await tester.tap(find.byType(IconButton));
+      await tester.pump();
+      expect(searchResults, <String>{});
+    });
   });
 }
 

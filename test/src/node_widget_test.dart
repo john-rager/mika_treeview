@@ -5,79 +5,81 @@ import 'package:mika_treeview/widgets/toggle_text.dart';
 
 void main() {
   Node node = {'id': '1', 'name': 'My Node'};
-  testWidgets('NodeWidget can be selectable', (WidgetTester tester) async {
-    await tester.pumpWidget(TestNodeWidget(
-      nodeWidget: NodeWidget(
-        node: node,
-        isSelectable: true,
-        onChanged: (v) {},
-      ),
-    ));
 
-    // Node is selectable, so the widget should contain a ToggleText.
-    expect(find.byType(ToggleText), findsOneWidget);
-  });
+  group('NodeWidget', () {
+    testWidgets('can be selectable', (WidgetTester tester) async {
+      await tester.pumpWidget(TestNodeWidget(
+        nodeWidget: NodeWidget(
+          node: node,
+          isSelectable: true,
+          onChanged: (v) {},
+        ),
+      ));
 
-  testWidgets('NodeWidget can be not-selectable', (WidgetTester tester) async {
-    await tester.pumpWidget(TestNodeWidget(
-      nodeWidget: NodeWidget(
-        node: node,
-        isSelectable: false,
-      ),
-    ));
+      // Node is selectable, so the widget should contain a ToggleText.
+      expect(find.byType(ToggleText), findsOneWidget);
+    });
 
-    // Node is not selectable, so the widget should not contain a ToggleText.
-    expect(find.byType(ToggleText), findsNothing);
-  });
+    testWidgets('can be not-selectable', (WidgetTester tester) async {
+      await tester.pumpWidget(TestNodeWidget(
+        nodeWidget: NodeWidget(
+          node: node,
+          isSelectable: false,
+        ),
+      ));
 
-  testWidgets('NodeWidget can have a trailing widget',
-      (WidgetTester tester) async {
-    await tester.pumpWidget(TestNodeWidget(
-      nodeWidget: NodeWidget(
-        node: node,
-        isSelectable: false,
-        trailingBuilder: (node) {
-          return const Text(
-            'Trailing',
-            key: Key('trailing_key'),
-          );
-        },
-      ),
-    ));
+      // Node is not selectable, so the widget should not contain a ToggleText.
+      expect(find.byType(ToggleText), findsNothing);
+    });
 
-    // A trailingBuilder was provided, so the node should have a
-    // trailing widget.
-    expect(find.byKey(const Key('trailing_key')), findsOneWidget);
-  });
+    testWidgets('can have a trailing widget', (WidgetTester tester) async {
+      await tester.pumpWidget(TestNodeWidget(
+        nodeWidget: NodeWidget(
+          node: node,
+          isSelectable: false,
+          trailingBuilder: (node) {
+            return const Text(
+              'Trailing',
+              key: Key('trailing_key'),
+            );
+          },
+        ),
+      ));
 
-  testWidgets('NodeWidget is bolded when it is among search results',
-      (WidgetTester tester) async {
-    await tester.pumpWidget(TestNodeWidget(
-      nodeWidget: NodeWidget(
-        node: node,
-        isSelectable: false,
-        searchResults: const {'1', '2', '3'},
-      ),
-    ));
+      // A trailingBuilder was provided, so the node should have a
+      // trailing widget.
+      expect(find.byKey(const Key('trailing_key')), findsOneWidget);
+    });
 
-    // Node is among search results, so it should be bolded.
-    var text = tester.widget<Text>(find.byType(Text));
-    expect(text.style!.fontWeight, FontWeight.w800);
-  });
+    testWidgets('is bolded when it is among search results',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(TestNodeWidget(
+        nodeWidget: NodeWidget(
+          node: node,
+          isSelectable: false,
+          searchResults: const {'1', '2', '3'},
+        ),
+      ));
 
-  testWidgets('NodeWidget is normal weight when it is not among search results',
-      (WidgetTester tester) async {
-    await tester.pumpWidget(TestNodeWidget(
-      nodeWidget: NodeWidget(
-        node: node,
-        isSelectable: false,
-        searchResults: const {'2', '3'},
-      ),
-    ));
+      // Node is among search results, so it should be bolded.
+      var text = tester.widget<Text>(find.byType(Text));
+      expect(text.style!.fontWeight, FontWeight.w800);
+    });
 
-    // Node is not among search results, so it should be normal weight.
-    var text = tester.widget<Text>(find.byType(Text));
-    expect(text.style!.fontWeight, null);
+    testWidgets('is normal weight when it is not among search results',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(TestNodeWidget(
+        nodeWidget: NodeWidget(
+          node: node,
+          isSelectable: false,
+          searchResults: const {'2', '3'},
+        ),
+      ));
+
+      // Node is not among search results, so it should be normal weight.
+      var text = tester.widget<Text>(find.byType(Text));
+      expect(text.style!.fontWeight, null);
+    });
   });
 }
 
