@@ -83,6 +83,12 @@ class _TreeViewState extends State<TreeView> {
       throw ArgumentError('onChanged is required when selectMode '
           'is other than ${SelectMode.none}');
     }
+    if (widget.values != null &&
+        widget.values!.isNotEmpty &&
+        widget.selectMode == SelectMode.none) {
+      throw ArgumentError(
+          'values cannot be provided if selectMode is ${SelectMode.none}');
+    }
     treeController = widget.treeController ?? TreeController();
     if (widget.values != null) {
       values = {...widget.values!};
