@@ -6,16 +6,16 @@ import '../widgets/toggle_text.dart';
 typedef TrailingBuilder<N> = Widget Function(N node);
 
 /// A widget that represents the visual appearance of a node in the tree.
-class NodeWidget extends StatefulWidget {
-  const NodeWidget({
-    Key? key,
-    required this.node,
-    this.isSelectable = false,
-    this.isSelected,
-    this.trailingBuilder,
-    this.searchResults = const {},
-    this.onChanged,
-  }) : super(key: key);
+class NodeWidget extends StatelessWidget {
+  const NodeWidget(
+      {Key? key,
+      required this.node,
+      this.isSelectable = false,
+      this.isSelected,
+      this.trailingBuilder,
+      this.searchResults = const {},
+      this.onChanged})
+      : super(key: key);
 
   /// The node to generate a node widget from.
   final Node node;
@@ -40,41 +40,31 @@ class NodeWidget extends StatefulWidget {
   final ValueChanged<bool>? onChanged;
 
   @override
-  State<NodeWidget> createState() => _NodeWidgetState();
-}
-
-class _NodeWidgetState extends State<NodeWidget> {
-  @override
-  void initState() {
-    super.initState();
-    if (widget.onChanged == null && widget.isSelectable) {
+  Widget build(BuildContext context) {
+    if (onChanged == null && isSelectable) {
       throw ArgumentError('onChanged is required when isSelectable is true');
     }
-  }
 
-  @override
-  Widget build(BuildContext context) {
     return Flexible(
       child: Row(
         children: [
-          (widget.isSelectable)
+          (isSelectable)
               ? ToggleText(
-                  text: widget.node['name'],
-                  value: widget.isSelected ?? false,
-                  style: (widget.searchResults.contains(widget.node['id']))
+                  text: node['name'],
+                  value: isSelected ?? false,
+                  style: (searchResults.contains(node['id']))
                       ? const TextStyle(fontWeight: FontWeight.w800)
                       : const TextStyle(),
-                  onChanged: widget.onChanged!,
+                  onChanged: onChanged!,
                 )
               : Text(
-                  widget.node['name'],
-                  style: (widget.searchResults.contains(widget.node['id']))
+                  node['name'],
+                  style: (searchResults.contains(node['id']))
                       ? const TextStyle(fontWeight: FontWeight.w800)
                       : const TextStyle(),
                 ),
           const Spacer(),
-          if (widget.trailingBuilder != null)
-            widget.trailingBuilder!(widget.node),
+          if (trailingBuilder != null) trailingBuilder!(node),
         ],
       ),
     );
