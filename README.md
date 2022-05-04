@@ -21,7 +21,7 @@ Add `mika_treeview` as a dependency in your pubspec.yaml file.
 
 ```yaml
 dependencies:
-  mika_treeview: ^0.0.1
+  mika_treeview: ^0.1.0
 ```
 Add the following import to your .dart file:
 ```dart
