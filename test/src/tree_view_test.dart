@@ -22,7 +22,7 @@ void main() {
       await tester.pumpWidget(
         TestTreeView(
           tree: Tree(nodes: []),
-          emptyTreeNotice: EmptyTreeNotice(),
+          emptyTreeNotice: const EmptyTreeNotice(),
         ),
       );
 
