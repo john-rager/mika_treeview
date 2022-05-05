@@ -103,7 +103,7 @@ class _TreeViewState extends State<TreeView> {
 
   @override
   Widget build(BuildContext context) {
-    var tree = _copyTree(widget.tree)!;
+    Tree tree = widget.tree.copy();
 
     void _onResults(results) {
       setState(() {
@@ -127,7 +127,7 @@ class _TreeViewState extends State<TreeView> {
           fst.TreeView(
             treeController: treeController,
             indent: widget.indent,
-            nodes: _buildTree(
+            nodes: _buildTreeNodes(
                 nodes: tree.nodes,
                 isSorted: widget.isSorted,
                 searchResults: searchResults),
@@ -137,11 +137,7 @@ class _TreeViewState extends State<TreeView> {
     }
   }
 
-  Tree? _copyTree(Tree? tree) {
-    return (tree == null) ? null : Tree.fromMap(tree.toMap());
-  }
-
-  List<fst.TreeNode> _buildTree({
+  List<fst.TreeNode> _buildTreeNodes({
     required List<Node> nodes,
     bool isSorted = false,
     required Set<String> searchResults,
@@ -176,7 +172,7 @@ class _TreeViewState extends State<TreeView> {
                   },
           ),
           children: (node.children != null)
-              ? _buildTree(
+              ? _buildTreeNodes(
                   nodes: node.children!,
                   isSorted: isSorted,
                   searchResults: searchResults)

@@ -18,6 +18,10 @@ class Tree {
     );
   }
 
+  Tree copy() {
+    return Tree.fromMap(toMap());
+  }
+
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'nodes': nodes.map((x) => x.toMap()).toList(),
