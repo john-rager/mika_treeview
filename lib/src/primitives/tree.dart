@@ -46,7 +46,7 @@ class Tree {
   factory Tree.fromFlat(List<Map<String, dynamic>> data) {
     Map<String, dynamic> map = {'nodes': []};
 
-    Map<String, dynamic>? searchNodes({
+    Map<String, dynamic>? _searchNodes({
       required List<dynamic> nodes,
       required String id,
     }) {
@@ -56,7 +56,7 @@ class Tree {
         if (node['id'] == id) {
           return node;
         } else if (node['children'] != null) {
-          result = searchNodes(nodes: node['children']!, id: id);
+          result = _searchNodes(nodes: node['children']!, id: id);
           if (result != null) return result;
         }
       }
@@ -87,7 +87,7 @@ class Tree {
           map['nodes'].add({'id': node['id'].toString(), 'name': node['name']});
           added.add(node);
         } else {
-          var parentNode = searchNodes(
+          var parentNode = _searchNodes(
               nodes: map['nodes'], id: node['parent_id'].toString());
           if (parentNode != null) {
             if (parentNode['children'] != null) {
