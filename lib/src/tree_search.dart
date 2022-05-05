@@ -97,19 +97,19 @@ Set<String> _searchTree({required Tree tree, required String text}) {
   Set<String> results = {};
 
   Set<String> traverse({
-    required Tree tree,
+    required List<Node> nodes,
     required String text,
   }) {
-    for (Node node in tree) {
-      if (node['name'].contains(RegExp(text, caseSensitive: false))) {
-        results.add(node['id']);
+    for (Node node in nodes) {
+      if (node.name.contains(RegExp(text, caseSensitive: false))) {
+        results.add(node.id);
       }
-      if (node['children'] != null) {
-        traverse(tree: node['children'], text: text);
+      if (node.children != null) {
+        traverse(nodes: node.children!, text: text);
       }
     }
     return results;
   }
 
-  return (text != '') ? traverse(tree: tree, text: text) : {};
+  return (text != '') ? traverse(nodes: tree.nodes, text: text) : {};
 }

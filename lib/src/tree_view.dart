@@ -54,7 +54,7 @@ class TreeView extends StatefulWidget {
 
   /// Optional function to build a trailing widget such as a pop-up menu or
   /// button, specific for the node.
-  final TrailingBuilder<dynamic>? trailingBuilder;
+  final TrailingBuilder<Node>? trailingBuilder;
 
   /// Specifies whether the tree is searchable.  If true, then a
   /// [TreeSearchForm] is rendered above the tree.
@@ -112,7 +112,7 @@ class _TreeViewState extends State<TreeView> {
       });
     }
 
-    if ((widget.tree.isEmpty)) {
+    if ((widget.tree.nodes.isEmpty)) {
       return widget.emptyTreeNotice;
     } else {
       return Column(
@@ -128,7 +128,7 @@ class _TreeViewState extends State<TreeView> {
             treeController: treeController,
             indent: widget.indent,
             nodes: _buildTree(
-                tree: tree,
+                nodes: tree.nodes,
                 isSorted: widget.isSorted,
                 searchResults: searchResults),
           ),
@@ -138,33 +138,23 @@ class _TreeViewState extends State<TreeView> {
   }
 
   Tree? _copyTree(Tree? tree) {
-    if (tree == null) {
-      return null;
-    }
-    return tree.map((e) {
-      var node = {
-        'id': e['id'],
-        'name': e['name'],
-        if (e['children'] != null) 'children': _copyTree(e['children']),
-      };
-      return node;
-    }).toList();
+    return (tree == null) ? null : Tree.fromMap(tree.toMap());
   }
 
   List<fst.TreeNode> _buildTree({
-    required Tree tree,
+    required List<Node> nodes,
     bool isSorted = false,
     required Set<String> searchResults,
   }) {
     if (isSorted) {
-      tree.sort((a, b) => (a['name']).compareTo(b['name']));
+      nodes.sort((a, b) => (a.name).compareTo(b.name));
     }
     return [
-      for (final node in tree)
+      for (final node in nodes)
         fst.TreeNode(
           content: NodeWidget(
             node: node,
-            isSelected: values.contains(node['id']),
+            isSelected: values.contains(node.id),
             trailingBuilder: widget.trailingBuilder,
             searchResults: searchResults,
             onChanged: (widget.selectMode == SelectMode.none)
@@ -175,9 +165,9 @@ class _TreeViewState extends State<TreeView> {
                         if (widget.selectMode == SelectMode.single) {
                           values.clear();
                         }
-                        values.add(node['id']);
+                        values.add(node.id);
                       } else {
-                        values.remove(node['id']);
+                        values.remove(node.id);
                       }
                     });
                     if (widget.onChanged != null) {
@@ -185,9 +175,9 @@ class _TreeViewState extends State<TreeView> {
                     }
                   },
           ),
-          children: (node['children'] != null)
+          children: (node.children != null)
               ? _buildTree(
-                  tree: node['children'],
+                  nodes: node.children!,
                   isSorted: isSorted,
                   searchResults: searchResults)
               : null,

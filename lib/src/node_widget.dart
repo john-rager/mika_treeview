@@ -24,7 +24,7 @@ class NodeWidget extends StatelessWidget {
 
   /// Optional function to build a trailing widget such as a pop-up menu or
   /// button, specific for the node.
-  final TrailingBuilder<dynamic>? trailingBuilder;
+  final TrailingBuilder<Node>? trailingBuilder;
 
   /// If [TreeView.isSearchable] is true, this will contain the set of node
   /// id's from a search.  This is used to determine whether the node text
@@ -42,17 +42,17 @@ class NodeWidget extends StatelessWidget {
         children: [
           if (onChanged != null)
             ToggleText(
-              text: node['name'],
+              text: node.name,
               value: isSelected ?? false,
-              style: (searchResults.contains(node['id']))
+              style: (searchResults.contains(node.id))
                   ? const TextStyle(fontWeight: FontWeight.w800)
                   : const TextStyle(),
               onChanged: onChanged!,
             )
           else
             Text(
-              node['name'],
-              style: (searchResults.contains(node['id']))
+              node.name,
+              style: (searchResults.contains(node.id))
                   ? const TextStyle(fontWeight: FontWeight.w800)
                   : const TextStyle(),
             ),

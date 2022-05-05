@@ -4,7 +4,7 @@ import 'package:mika_treeview/mika_treeview.dart';
 import 'package:mika_treeview/widgets/toggle_text.dart';
 
 void main() {
-  Node node = {'id': '1', 'name': 'My Node'};
+  Node node = Node(id: '1', name: 'My Node');
 
   group('NodeWidget', () {
     testWidgets('can be selectable', (WidgetTester tester) async {

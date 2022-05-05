@@ -20,8 +20,8 @@ void main() {
     testWidgets('displays an empty tree notification if the tree is empty',
         (WidgetTester tester) async {
       await tester.pumpWidget(
-        const TestTreeView(
-          tree: [],
+        TestTreeView(
+          tree: Tree(nodes: []),
           emptyTreeNotice: EmptyTreeNotice(),
         ),
       );
@@ -163,7 +163,7 @@ void main() {
           trailingBuilder: (node) {
             return Text(
               'Trailing',
-              key: Key('Trailing ${node['id']}'),
+              key: Key('Trailing ${node.id}'),
             );
           },
         ),
@@ -210,7 +210,7 @@ void main() {
 
       final firstNodeWidget =
           tester.widget<NodeWidget>(find.byType(NodeWidget).first);
-      expect(firstNodeWidget.node['name'], 'Accounting');
+      expect(firstNodeWidget.node.name, 'Accounting');
     });
 
     testWidgets('isSorted = false shows Sales as first node',
@@ -225,7 +225,7 @@ void main() {
 
       final firstNodeWidget =
           tester.widget<NodeWidget>(find.byType(NodeWidget).first);
-      expect(firstNodeWidget.node['name'], 'Sales');
+      expect(firstNodeWidget.node.name, 'Sales');
     });
   });
 }
@@ -249,7 +249,7 @@ class TestTreeView extends StatefulWidget {
   final Set<String>? values;
   final ValueChanged<Set<String>>? onChanged;
   final Widget emptyTreeNotice;
-  final TrailingBuilder<dynamic>? trailingBuilder;
+  final TrailingBuilder<Node>? trailingBuilder;
   final bool isSearchable;
   final bool isSorted;
 
