@@ -1,3 +1,7 @@
+# MIKA Tree View
+
+[![pub package](https://img.shields.io/pub/v/mika_treeview.svg)](https://pub.dev/packages/mika_treeview)
+
 A treeview based on [flutter_simple_treeview](https://pub.dev/packages/flutter_simple_treeview), adding several useful features.
 
 <p>
