@@ -75,6 +75,20 @@ Tree tree = [
   ];
 ```
 
+NOTE: Often when pulling hierarchical data from a database table, it will look something like this:
+
+|  id   |          name          | parent_id |
+|:-----:|:----------------------:|:---------:|
+|   1   |       Accounting       |    null   |
+|   2   |   Accounts Receivable  |      1    |
+|   3   |    Accounts Payable    |      1    |
+|   4   |      Manufacturing     |    null   |
+|   5   |      Product Design    |      4    |
+|   6   | Research & Development |      5    |
+
+\
+To save from having to convert this into the structure required by TreeView, there is a factory method `Tree.fromFlat` that accepts this format and converts it to the required `Tree` structure. See the API documentation for more information.
+
 Example tree view (all options enabled):
 
 ```dart
@@ -91,6 +105,8 @@ TreeView(
   indent: 20.0,
 ),
 ```
+See the API documentation for more information.
+
 ## Additional information
 
 This is my very first package on pub.dev, so I'd love to hear your feedback. If you find it useful, please like it - it'll help

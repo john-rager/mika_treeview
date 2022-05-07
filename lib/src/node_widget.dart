@@ -31,7 +31,7 @@ class NodeWidget extends StatelessWidget {
   /// should be highlighted as found.
   final Set<String> searchResults;
 
-  /// Makes the node is selectable.  This function will be called to indicate
+  /// Makes the node selectable, and this function will be called to indicate
   /// that the node has been tapped.
   final ValueChanged<bool>? onChanged;
 

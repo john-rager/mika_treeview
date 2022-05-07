@@ -2,9 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
+/// Data structure of a node in the tree.
 class Node {
+  /// A unique identifier of the node.
   final String id;
+
+  /// The name of the node as it will appear in the tree.
   final String name;
+
+  /// Children, if any.
   final List<Node>? children;
 
   Node({

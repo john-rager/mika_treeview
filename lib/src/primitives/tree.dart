@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:mika_treeview/src/primitives/node.dart';
 
+/// Data structure of an n-ary tree.
 class Tree {
+  /// Root node(s) of the tree.
   final List<Node> nodes;
 
   Tree({
@@ -18,6 +20,7 @@ class Tree {
     );
   }
 
+  /// Creates a deep copy of a tree.
   Tree copy() {
     return Tree.fromMap(toMap());
   }
@@ -43,6 +46,39 @@ class Tree {
   factory Tree.fromJson(String source) =>
       Tree.fromMap(json.decode(source) as Map<String, dynamic>);
 
+  /// Creates a tree structure from a flat structure.
+  ///
+  /// ```dart
+  /// final Tree tree = Tree.fromFlat(flatData);
+  /// ```
+  ///
+  /// The flat structure must be a `List<Map<String, dynamic>>`, each entry
+  /// containing an `id`, `name`, and `parent_id` keys. `id` must be unique.
+  /// `parent_id` must be either an `id` of a node or `null` to indicate a
+  /// root node.  The order of the nodes is not important as the method will
+  /// cycle as many times as necessary until all nodes are resolved to a parent
+  /// or root node.
+  ///
+  /// Here's an example input:
+  ///
+  /// ```dart
+  ///     List<Map<String, dynamic>> flatData = [
+  ///      {'id': 1, 'name': 'Accounting', 'parent_id': null},
+  ///      {'id': 4, 'name': 'Payroll', 'parent_id': 1},
+  ///      {'id': 5, 'name': 'Sales', 'parent_id': null},
+  ///      {'id': 6, 'name': 'Manufacturing', 'parent_id': null},
+  ///      {'id': 7, 'name': 'Product Design', 'parent_id': 6},
+  ///      {'id': 8, 'name': 'Lead Generation', 'parent_id': 5},
+  ///      {'id': 9, 'name': 'Research & Development', 'parent_id': 7},
+  ///      {'id': 3, 'name': 'Accounts Payable', 'parent_id': 1},
+  ///      {'id': 11, 'name': 'Parts Inventory', 'parent_id': 10},
+  ///      {'id': 2, 'name': 'Accounts Receivable', 'parent_id': 1},
+  ///      {'id': 10, 'name': 'Logistics', 'parent_id': 6}
+  ///    ];
+  /// ```
+  ///
+  /// Throws a [FormatException] if any children nodes point to a non-
+  /// existent parent node.
   factory Tree.fromFlat(List<Map<String, dynamic>> data) {
     Map<String, dynamic> map = {'nodes': []};
 

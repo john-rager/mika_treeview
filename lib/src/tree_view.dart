@@ -45,7 +45,7 @@ class TreeView extends StatefulWidget {
   /// set of node id's can be used to specify the initially selected node(s).
   final Set<String>? values;
 
-  /// If [isSelectable] is true, this function will be called to indicate
+  /// Makes all nodes selectable, and this function will be called to indicate
   /// that the node has been tapped.
   final ValueChanged<Set<String>>? onChanged;
 
